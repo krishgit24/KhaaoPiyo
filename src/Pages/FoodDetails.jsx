@@ -77,12 +77,12 @@ export default function FoodDetails() {
         <h2 className="text-2xl font-bold mb-4">🍽 You may also like</h2>
         <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {foods
-            .filter((item) => item.id !== Number(id))
+            .filter((item) => item._id !== id)
             .slice(0, 8)
             .map((item) => (
               <div
-                key={item.id}
-                onClick={() => navigate(`/food/${item.id}`)}
+                key={item._id}
+                onClick={() => navigate(`/food/${item._id}`)}
                 className="bg-white rounded-lg shadow-md p-4 cursor-pointer hover:shadow-lg transition hover:scale-105"
               >
                 <img src={item.image} alt={item.title} className="h-40 mx-auto mb-3 object-contain" />

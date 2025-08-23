@@ -1,16 +1,19 @@
 // src/Components/Card.jsx
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "../Context/CartContext";
+import { useNavigate } from "react-router-dom";
 
-export default function Card({ id, title, image, price }) {
+export default function Card({ _id, title, image, price }) {
   const { addToCart } = useCart();
+  const navigate = useNavigate();
 
   return (
     <div
       className="bg-gradient-to-tr from-orange-100 via-amber-100 to-yellow-100 
                  shadow-xl rounded-2xl w-72 flex flex-col overflow-hidden 
                  transform transition-transform duration-300 
-                 hover:scale-105 hover:shadow-2xl"
+                 hover:scale-105 hover:shadow-2xl cursor-pointer"
+      onClick={() => navigate(`/food/${_id}`)}
     >
       {/* Image with hover zoom */}
       <div className="h-44 w-full overflow-hidden">
@@ -24,7 +27,7 @@ export default function Card({ id, title, image, price }) {
       </div>
 
       {/* Content */}
-      <div className="flex flex-col flex-grow p-4">
+      <div className="flex flex-col flex-grow p-4" onClick={(e) => e.stopPropagation()}>
         <h2 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-2">
           {title}
         </h2>
@@ -33,7 +36,7 @@ export default function Card({ id, title, image, price }) {
         {/* Button aligned bottom */}
         <div className="mt-auto">
           <button
-            onClick={() => addToCart({ id, title, image, price })}
+            onClick={() => addToCart({ _id, title, image, price })}
             className="w-full bg-gradient-to-r from-red-500 to-orange-400 
                        hover:from-orange-500 hover:to-red-500 
                        text-white font-semibold py-2 px-4 rounded-xl 

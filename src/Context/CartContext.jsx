@@ -6,17 +6,18 @@ const CartContext = createContext();
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]); // [{id,title,price,image,quantity}]
 
-  const addToCart = (item, qty = 1) => {
+  function addToCart(item) {
     setCartItems((prev) => {
-      const idx = prev.findIndex((p) => p.id === item.id);
-      if (idx >= 0) {
-        const next = [...prev];
-        next[idx] = { ...next[idx], quantity: next[idx].quantity + qty };
-        return next;
+      const exists = prev.find((i) => i._id === item._id);
+      if (exists) {
+        return prev.map((i) =>
+          i._id === item._id ? { ...i, quantity: i.quantity + 1 } : i
+        );
       }
-      return [...prev, { ...item, quantity: qty }];
+      // Use _id from backend
+      return [...prev, { ...item, quantity: 1 }];
     });
-  };
+  }
 
   const removeFromCart = (id) => setCartItems((prev) => prev.filter((p) => p.id !== id));
 

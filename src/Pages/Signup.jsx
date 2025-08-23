@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../Context/UserContext";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -7,15 +8,35 @@ const Signup = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const { login } = useContext(UserContext);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Signup Successful! (Demo only, no backend connected)");
-    console.log("User Data:", formData);
+    setError("");
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", // important for cookies!
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.message || "Signup failed");
+        return;
+      }
+      login(data); // data is user info from backend
+      // Signup successful, redirect to home or login
+      navigate("/");
+    } catch (err) {
+      setError("Network error");
+    }
   };
 
   return (
@@ -25,7 +46,7 @@ const Signup = () => {
         className="bg-white p-8 rounded-2xl shadow-xl w-96 border-t-4 border-orange-400"
       >
         <h2 className="text-3xl font-bold text-center mb-6 text-red-600">Create Account</h2>
-
+        {error && <p className="text-center text-red-500 mb-4">{error}</p>}
         <input
           type="text"
           name="name"

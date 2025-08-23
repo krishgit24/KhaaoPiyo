@@ -105,7 +105,7 @@ export default function Menu() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-5">
           {filtered.map((item) => (
             <div
-              key={item.id}
+              key={item._id}
               className="bg-gradient-to-tr from-orange-100 via-amber-100 to-yellow-100 
                          shadow-lg rounded-2xl flex flex-col overflow-hidden 
                          transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
@@ -113,7 +113,7 @@ export default function Menu() {
               {/* Image */}
               <div
                 className="h-44 w-full overflow-hidden cursor-pointer"
-                onClick={() => navigate(`/food/${item.id}`)}
+                onClick={() => navigate(`/food/${item._id}`)}
               >
                 <img
                   src={item.image}
@@ -141,7 +141,7 @@ export default function Menu() {
                 <button
                   onClick={() =>
                     addToCart({
-                      id: item.id,
+                      _id: item._id,
                       title: item.title,
                       image: item.image,
                       price: item.price,

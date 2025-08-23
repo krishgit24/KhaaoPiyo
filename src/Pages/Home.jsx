@@ -26,8 +26,8 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 place-items-center">
           {featured.map((item) => (
             <Card
-              key={item.id}
-              id={item.id}
+              key={item._id}
+              _id={item._id}
               title={item.title}
               image={item.image}
               price={item.price}
