@@ -1,3 +1,4 @@
+// src/Context/UserContext.jsx
 import { createContext, useState, useEffect } from "react";
 
 export const UserContext = createContext();
@@ -7,17 +8,13 @@ export function UserProvider({ children }) {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Check login status on mount
   useEffect(() => {
     setLoading(true);
     fetch(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
-      credentials: "include",
-      headers: {
-        "Authorization": token ? `Bearer ${token}` : undefined,
-      },
+      credentials: "include", // ensures cookies are sent
     })
-      .then(res => res.ok ? res.json() : null)
-      .then(data => {
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
         if (data?.token) setToken(data.token);
         setUser(data?.user || null);
       })
@@ -29,7 +26,11 @@ export function UserProvider({ children }) {
     setToken(token);
   };
 
-  const logout = () => {
+  const logout = async () => {
+    await fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {
+      method: "POST",
+      credentials: "include",
+    });
     setUser(null);
     setToken(null);
   };
