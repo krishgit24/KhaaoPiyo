@@ -16,7 +16,7 @@ import { UserProvider } from "./Context/UserContext";
 import Profile from "./Pages/Profile";
 import Orders from "./Pages/Orders";
 import Checkout from "./Pages/Checkout";
-import OrderConfirmation from "./Pages/OrderConfirmation";
+import Orderconfirmation from "./Pages/OrderConfirmation";
 
 function App() {
   return (
@@ -38,7 +38,7 @@ function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/checkout" element={<Checkout />} />
-                <Route path="/order-confirmation/:id" element={<OrderConfirmation />} />
+                <Route path="/order-confirmation/:id" element={<Orderconfirmation />} />
               </Routes>
             </main>
             <Footer />
