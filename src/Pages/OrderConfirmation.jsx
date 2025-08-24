@@ -17,22 +17,27 @@ export default function OrderConfirmation() {
   }, [id]);
 
   const fetchOrder = () => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/orders/${id}`, {
-      credentials: "include",
-    })
-      .then(res => res.ok ? res.json() : null)
-      .then(data => setOrder(data));
-  };
+  fetch(`${import.meta.env.VITE_API_URL}/api/orders/${id}`, {
+    headers: { "Authorization": `Bearer ${token}` },
+    credentials: "include",
+  })
+    .then(res => res.ok ? res.json() : null)
+    .then(data => setOrder(data));
+};
 
-  const updateStatus = async (newStatus) => {
-    await fetch(`${import.meta.env.VITE_API_URL}/api/orders/${id}/status`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ status: newStatus }),
-    });
-    fetchOrder();
-  };
+const updateStatus = async (newStatus) => {
+  await fetch(`${import.meta.env.VITE_API_URL}/api/orders/${id}/status`, {
+    method: "PATCH",
+    headers: { 
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}` 
+    },
+    credentials: "include",
+    body: JSON.stringify({ status: newStatus }),
+  });
+  fetchOrder();
+};
+
 
   if (!order) return <div className="text-center mt-10">Loading...</div>;
 

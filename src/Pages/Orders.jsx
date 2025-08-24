@@ -7,15 +7,18 @@ export default function Orders() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user) return;
-    setLoading(true);
-    fetch(`${import.meta.env.VITE_API_URL}/api/orders`, {
-      credentials: "include",
-    })
-      .then((res) => (res.ok ? res.json() : []))
-      .then((data) => setOrders(data))
-      .finally(() => setLoading(false));
-  }, [user]);
+      if (!user) return;
+      setLoading(true);
+      fetch(`${import.meta.env.VITE_API_URL}/api/orders`, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+        credentials: "include",
+      })
+        .then((res) => (res.ok ? res.json() : []))
+        .then((data) => setOrders(data))
+        .finally(() => setLoading(false));
+    }, [user]);
 
   if (!user) {
     return <div className="text-center mt-10 text-red-500">Please login to view your orders.</div>;

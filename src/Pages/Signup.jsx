@@ -31,7 +31,7 @@ const Signup = () => {
         setError(data.message || "Signup failed");
         return;
       }
-      login(data); // data is user info from backend
+      login({ user: data.user, token: data.token }); // data is user info from backend
       // Signup successful, redirect to home or login
       navigate("/");
     } catch (err) {

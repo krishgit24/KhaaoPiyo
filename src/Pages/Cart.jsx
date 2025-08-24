@@ -29,10 +29,14 @@ export default function Cart() {
       }));
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/orders`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}` // attach token
+        },
         credentials: "include",
         body: JSON.stringify({ items, total: cartTotal }),
       });
+
       if (!res.ok) {
         const data = await res.json();
         setError(data.message || "Order failed");

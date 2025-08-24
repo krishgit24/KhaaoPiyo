@@ -3,10 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { login } = useContext(UserContext);
@@ -22,17 +19,20 @@ const Login = () => {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include", // important for cookies!
         body: JSON.stringify(formData),
       });
+
       const data = await res.json();
+
       if (!res.ok) {
         setError(data.message || "Login failed");
         return;
       }
-      login(data); // data is user info from backend
-      // Login successful, redirect to home or menu
-      navigate("/");
+
+      // Store token + user data in context
+      login({ user: data.user, token: data.token });
+
+      navigate("/"); // redirect after login
     } catch (err) {
       setError("Network error");
     }

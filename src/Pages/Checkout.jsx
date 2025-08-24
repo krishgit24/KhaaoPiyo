@@ -38,7 +38,10 @@ export default function Checkout() {
         }));
         const res = await fetch(`${import.meta.env.VITE_API_URL}/api/orders`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { 
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${userContext.token}` // attach token here
+          },
           credentials: "include",
           body: JSON.stringify({
             items,
@@ -48,6 +51,7 @@ export default function Checkout() {
             paymentMode: form.paymentMode,
           }),
         });
+
         if (!res.ok) {
           const data = await res.json();
           setError(data.message || "Order failed");
