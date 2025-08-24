@@ -1,16 +1,18 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { FoodProvider } from "./Context/FoodContext";
-import { BrowserRouter } from 'react-router-dom'
-import './index.css'
-import App from './App.jsx'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import { UserProvider } from "./Context/UserContext.jsx";
+import { CartProvider } from "./Context/CartContext.jsx";
+import { FoodProvider } from "./Context/FoodContext.jsx";
 
-createRoot(document.getElementById('root')).render(
-   <StrictMode>
-    <FoodProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </FoodProvider>
-  </StrictMode>
-)
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <UserProvider>
+      <FoodProvider>
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </FoodProvider>
+    </UserProvider>
+  </React.StrictMode>
+);
