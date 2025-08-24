@@ -8,7 +8,7 @@ import App from './App.jsx'
 createRoot(document.getElementById('root')).render(
    <StrictMode>
     <FoodProvider>
-      <BrowserRouter basename="/KhaaoPiyo">
+      <BrowserRouter>
         <App />
       </BrowserRouter>
     </FoodProvider>
