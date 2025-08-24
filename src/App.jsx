@@ -1,5 +1,4 @@
-// src/App.jsx
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Home from "./Pages/Home";
 import Menu from "./Pages/Menu";
@@ -25,27 +24,24 @@ function App() {
       <UserProvider>
         <FoodProvider>
           <CartProvider>
-            <Router 
-            basename="/KhaaoPiyo">
-              <Navbar />
-              <main className="flex-grow">
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/menu" element={<Menu />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/food/:id" element={<FoodDetails />} />
-                  <Route path="/cart" element={<Cart />} />
-                  <Route path="/signup" element={<Signup />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/orders" element={<Orders />} />
-                  <Route path="/checkout" element={<Checkout />} />
-                  <Route path="/order-confirmation/:id" element={<OrderConfirmation />} />
-                </Routes>
-              </main>
-              <Footer />
-            </Router>
+            <Navbar />
+            <main className="flex-grow">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/menu" element={<Menu />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/food/:id" element={<FoodDetails />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/orders" element={<Orders />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/order-confirmation/:id" element={<OrderConfirmation />} />
+              </Routes>
+            </main>
+            <Footer />
           </CartProvider>
         </FoodProvider>
       </UserProvider>
