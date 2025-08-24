@@ -25,7 +25,8 @@ function App() {
       <UserProvider>
         <FoodProvider>
           <CartProvider>
-            <Router>
+            <Router 
+            basename="/KhaaoPiyo">
               <Navbar />
               <main className="flex-grow">
                 <Routes>
