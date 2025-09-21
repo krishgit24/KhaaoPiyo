@@ -19,7 +19,7 @@ const Login = () => {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include", // to include cookies
+        credentials: "include",
         body: JSON.stringify(formData),
       });
 
@@ -30,10 +30,8 @@ const Login = () => {
         return;
       }
 
-      // Only set user, not token
       login({ user: data.user });
-
-      navigate("/"); // redirect after login
+      navigate("/");
     } catch (err) {
       setError("Network error");
     }

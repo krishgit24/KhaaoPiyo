@@ -31,7 +31,7 @@ const Signup = () => {
         setError(data.message || "Signup failed");
         return;
       }
-      login({ user: data.user });
+      login({ user: data.user }); // removed token usage
       navigate("/");
     } catch (err) {
       setError("Network error");
