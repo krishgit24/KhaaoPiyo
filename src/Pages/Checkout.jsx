@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Checkout() {
   const { cartItems, cartTotal, clearCart } = useCart();
-  const { user, token, loading } = useContext(UserContext);
+  const { user, loading } = useContext(UserContext);
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -49,11 +49,8 @@ export default function Checkout() {
 
         const res = await fetch(`${import.meta.env.VITE_API_URL}/api/orders`, {
           method: "POST",
-          headers: { 
-            "Content-Type": "application/json",
-            "Authorization": token ? `Bearer ${token}` : undefined
-          },
-          credentials: "include", // must include cookies for auth
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify({
             items,
             total: cartTotal,

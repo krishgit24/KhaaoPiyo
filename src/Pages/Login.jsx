@@ -30,8 +30,8 @@ const Login = () => {
         return;
       }
 
-      // Store token + user data in context
-      login({ user: data.user, token: data.token });
+      // Only set user, not token
+      login({ user: data.user });
 
       navigate("/"); // redirect after login
     } catch (err) {

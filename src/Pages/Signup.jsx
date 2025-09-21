@@ -23,7 +23,7 @@ const Signup = () => {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include", // important for cookies!
+        credentials: "include",
         body: JSON.stringify(formData),
       });
       const data = await res.json();
@@ -31,8 +31,7 @@ const Signup = () => {
         setError(data.message || "Signup failed");
         return;
       }
-      login({ user: data.user, token: data.token }); // data is user info from backend
-      // Signup successful, redirect to home or login
+      login({ user: data.user });
       navigate("/");
     } catch (err) {
       setError("Network error");
