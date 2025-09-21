@@ -11,7 +11,8 @@ export function UserProvider({ children }) {
   useEffect(() => {
     setLoading(true);
     fetch(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
-      credentials: "include", // ensures cookies are sent
+      credentials: "include",
+      headers: token ? { "Authorization": `Bearer ${token}` } : {}
     })
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
