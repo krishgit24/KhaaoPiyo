@@ -3,7 +3,8 @@ import { createContext, useContext, useMemo, useState } from "react";
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  const [cartItems, setCartItems] = useState([]); // [{_id,title,price,image,quantity}]
+  const [cartItems, setCartItems] = useState([]);
+  const [notification, setNotification] = useState("");
 
   function addToCart(item) {
     setCartItems((prev) => {
@@ -15,6 +16,8 @@ export function CartProvider({ children }) {
       }
       return [...prev, { ...item, quantity: 1 }];
     });
+    setNotification(`${item.title} added to cart!`);
+    setTimeout(() => setNotification(""), 2000);
   }
 
   const removeFromCart = (id) =>
@@ -53,6 +56,7 @@ export function CartProvider({ children }) {
     clearCart,
     cartCount,
     cartTotal,
+    notification, // expose notification
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

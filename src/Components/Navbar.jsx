@@ -5,7 +5,7 @@ import { useCart } from "../Context/CartContext";
 
 export default function Navbar() {
   const { user, logout } = useContext(UserContext);
-  const { cartCount } = useCart();
+  const { cartCount, notification } = useCart();
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -135,6 +135,11 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+      {notification && (
+        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-2 rounded shadow-lg z-50 animate-bounce">
+          {notification}
+        </div>
+      )}
     </nav>
   );
 }
