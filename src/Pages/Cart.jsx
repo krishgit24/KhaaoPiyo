@@ -31,7 +31,7 @@ export default function Cart() {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}` // attach token
+          // attach token
         },
         credentials: "include",
         body: JSON.stringify({ items, total: cartTotal }),
