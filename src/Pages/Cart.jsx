@@ -54,7 +54,7 @@ export default function Cart() {
       <div className="flex flex-col items-center justify-center min-h-[60vh] bg-amber-100">
         <img src="/empty-cart.svg" alt="Empty Cart" className="w-40 mb-6" />
         <div className="text-2xl font-semibold text-gray-500 mb-2">Your cart is empty</div>
-        <Link to="/menu" className="bg-red-500 text-white px-6 py-3 rounded-xl font-semibold shadow hover:scale-105 transition">
+        <Link to="/menu" className="bg-red-500 text-white px-6 py-3 rounded-xl font-semibold shadow hover:scale-105 transition cursor-pointer">
           Browse Menu
         </Link>
       </div>
@@ -77,16 +77,16 @@ export default function Cart() {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => decrease(item._id)}
-                      className="px-3 py-1 bg-gray-200 rounded-full text-lg font-bold"
+                      className="px-3 py-1 bg-gray-200 rounded-full text-lg font-bold cursor-pointer"
                     >-</button>
                     <span className="px-4 text-lg font-semibold">{item.quantity}</span>
                     <button
                       onClick={() => increase(item._id)}
-                      className="px-3 py-1 bg-gray-200 rounded-full text-lg font-bold"
+                      className="px-3 py-1 bg-gray-200 rounded-full text-lg font-bold cursor-pointer"
                     >+</button>
                     <button
                       onClick={() => removeFromCart(item._id)}
-                      className="ml-6 px-3 py-1 bg-red-100 text-red-600 rounded-full font-semibold"
+                      className="ml-6 px-3 py-1 bg-red-100 text-red-600 rounded-full font-semibold cursor-pointer"
                     >Remove</button>
                   </div>
                 </div>
@@ -98,7 +98,7 @@ export default function Cart() {
           </ul>
           <button
             onClick={clearCart}
-            className="bg-gray-200 text-gray-700 py-2 rounded-xl mt-6 w-full font-semibold"
+            className="bg-gray-200 text-gray-700 py-2 rounded-xl mt-6 w-full font-semibold cursor-pointer"
           >
             Clear Cart
           </button>
@@ -119,7 +119,7 @@ export default function Cart() {
           </div>
           <button
             onClick={() => navigate("/checkout")}
-            className="bg-gradient-to-r from-orange-400 to-red-500 text-white font-semibold py-3 rounded-xl shadow hover:scale-105 transition mt-8"
+            className="bg-gradient-to-r from-orange-400 to-red-500 text-white font-semibold py-3 rounded-xl shadow hover:scale-105 transition mt-8 cursor-pointer"
           >
             Proceed to Checkout
           </button>

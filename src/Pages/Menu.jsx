@@ -54,7 +54,7 @@ export default function Menu() {
 
 
   return (
-    <div className="bg-amber-200 min-h-screen py-10 px-5">
+    <div className="bg-amber-200 min-h-screen py-10 px-6">
 
       {/* 🔥 Unified Header Box */}
       <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl p-8 text-center text-white mb-10 shadow-xl">
@@ -62,7 +62,7 @@ export default function Menu() {
         <p className="mt-3 text-lg">Order your favorite food, hot & fresh!</p>
       </div>
 
-      {error && <p className="text-center text-red-600 mb-4">{error}</p>}
+      {error && <p className="text-center text-red-700 font-medium mb-6">{error}</p>}
 
       {/* 🔍 Search + Category Filter */}
       <div className="flex flex-col items-center gap-6 mb-10">
@@ -150,7 +150,7 @@ export default function Menu() {
                   className="w-full bg-gradient-to-r from-red-500 to-orange-400 
                              hover:from-orange-600 hover:to-red-500 text-white 
                              font-semibold py-2 px-4 rounded-xl shadow-md 
-                             flex items-center justify-center gap-2 transition-all"
+                             flex items-center justify-center gap-2 transition-all cursor-pointer"
                 >
                   <ShoppingCart size={18} />
                   Add to Cart
