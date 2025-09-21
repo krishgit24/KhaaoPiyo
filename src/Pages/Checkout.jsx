@@ -4,6 +4,8 @@ import { useContext, useState } from "react";
 import { UserContext } from "../Context/UserContext";
 import { useNavigate } from "react-router-dom";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 export default function Checkout() {
   const { cartItems, cartTotal, clearCart } = useCart();
   const { user, loading } = useContext(UserContext);
@@ -23,9 +25,7 @@ export default function Checkout() {
   if (!user) return <div className="text-center mt-10 text-red-500">Please login to checkout.</div>;
   if (!cartItems.length) return <div className="text-center mt-10 text-gray-500">Your cart is empty.</div>;
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,7 +47,7 @@ export default function Checkout() {
           quantity: item.quantity,
         }));
 
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/orders`, {
+        const res = await fetch(`${API_URL}/api/orders`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",

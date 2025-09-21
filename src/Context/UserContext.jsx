@@ -1,7 +1,9 @@
 // src/Context/UserContext.jsx
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useMemo } from "react";
 
 export const UserContext = createContext();
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -10,32 +12,31 @@ export function UserProvider({ children }) {
   // Fetch user info on mount (cookie-based session)
   useEffect(() => {
     setLoading(true);
-    fetch(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
+    fetch(`${API_URL}/api/auth/me`, {
       credentials: "include",
     })
       .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
-        setUser(data?.user || null);
-      })
+      .then((data) => setUser(data?.user || null))
+      .catch(() => setUser(null))
       .finally(() => setLoading(false));
   }, []);
 
-  // Login: set user after successful login/signup
-  const login = ({ user }) => {
-    setUser(user);
-  };
+  // Update user data
+  const updateUser = (userData) => setUser(userData);
 
   // Logout: clear user and session cookie
   const logout = async () => {
-    await fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {
+    await fetch(`${API_URL}/api/auth/logout`, {
       method: "POST",
       credentials: "include",
     });
     setUser(null);
   };
 
+  const value = useMemo(() => ({ user, loading, updateUser, logout }), [user, loading]);
+
   return (
-    <UserContext.Provider value={{ user, loading, login, logout }}>
+    <UserContext.Provider value={value}>
       {children}
     </UserContext.Provider>
   );
