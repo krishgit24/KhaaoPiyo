@@ -5,15 +5,13 @@ import { UserContext } from "../Context/UserContext";
 import { useNavigate, Link } from "react-router-dom";
 
 export default function Cart() {
-  const { cartItems = [], clearCart, cartTotal } = useCart();
+  const { cartItems = [], clearCart, cartTotal, increase, decrease, removeFromCart } = useCart();
   const { user } = useContext(UserContext);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
   const handleCheckout = async () => {
     setError("");
-    setSuccess("");
     if (!user) {
       setError("Please login to place an order.");
       return;
@@ -42,7 +40,6 @@ export default function Cart() {
         setError(data.message || "Order failed");
         return;
       }
-      setSuccess("Order placed successfully!");
       clearCart();
       setTimeout(() => {
         navigate("/orders");
@@ -53,7 +50,12 @@ export default function Cart() {
   };
 
   if (!cartItems.length) {
-    return <div className="text-center mt-10 text-gray-500">Your cart is empty.</div>;
+    return (
+      <div className="text-center mt-10 text-gray-500">
+        Your cart is empty.<br />
+        <Link to="/menu" className="text-red-500 underline">Browse Menu</Link>
+      </div>
+    );
   }
 
   return (
@@ -61,39 +63,50 @@ export default function Cart() {
       <h1 className="text-4xl font-bold text-center text-red-600 mb-10">
         🛒 Your Cart
       </h1>
-      <div className="max-w-2xl mx-auto mt-10 bg-white rounded-xl shadow p-8">
-        <h2 className="text-3xl font-bold mb-4 text-red-600">Your Cart</h2>
+      <div className="max-w-2xl mx-auto bg-white rounded-xl shadow p-8">
         <ul>
           {cartItems.map((item) => (
-            <li
-              key={item._id}
-              className="flex justify-between items-center mb-4"
-            >
-              <div>
-                <span className="font-semibold">{item.title}</span>
-                <span className="ml-2 text-gray-500">x{item.quantity}</span>
+            <li key={item._id} className="flex items-center border-b py-4 gap-4">
+              <img src={item.image} alt={item.title} className="w-16 h-16 rounded object-cover border" />
+              <div className="flex-1">
+                <div className="font-semibold text-lg">{item.title}</div>
+                <div className="text-gray-500">₹{item.price}</div>
+                <div className="flex items-center gap-2 mt-2">
+                  <button
+                    onClick={() => decrease(item._id)}
+                    className="px-2 py-1 bg-gray-200 rounded"
+                  >-</button>
+                  <span className="px-3">{item.quantity}</span>
+                  <button
+                    onClick={() => increase(item._id)}
+                    className="px-2 py-1 bg-gray-200 rounded"
+                  >+</button>
+                  <button
+                    onClick={() => removeFromCart(item._id)}
+                    className="ml-4 px-2 py-1 bg-red-100 text-red-600 rounded"
+                  >Remove</button>
+                </div>
               </div>
-              <span className="text-red-500 font-bold">
+              <div className="font-bold text-red-500 ml-4">
                 ₹{item.price * item.quantity}
-              </span>
+              </div>
             </li>
           ))}
         </ul>
         <div className="mt-6 flex flex-col gap-3">
-          <p className="text-xl font-bold">Total: ₹{cartTotal}</p>
+          <p className="text-xl font-bold text-right">Total: ₹{cartTotal}</p>
           {error && <p className="text-red-500">{error}</p>}
-          {success && <p className="text-green-600">{success}</p>}
-          <button
-            onClick={handleCheckout}
-            className="bg-gradient-to-r from-orange-400 to-red-500 text-white font-semibold py-3 rounded-xl shadow hover:scale-105 transition"
-          >
-            Place Order
-          </button>
           <button
             onClick={() => navigate("/checkout")}
-            className="bg-gradient-to-r from-orange-400 to-red-500 text-white font-semibold py-3 rounded-xl shadow hover:scale-105 transition mt-2"
+            className="bg-gradient-to-r from-orange-400 to-red-500 text-white font-semibold py-3 rounded-xl shadow hover:scale-105 transition"
           >
             Proceed to Checkout
+          </button>
+          <button
+            onClick={clearCart}
+            className="bg-gray-200 text-gray-700 py-2 rounded-xl mt-2"
+          >
+            Clear Cart
           </button>
         </div>
       </div>
