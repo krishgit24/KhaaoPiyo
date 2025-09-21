@@ -61,49 +61,42 @@ export default function Cart() {
       <h1 className="text-4xl font-bold text-center text-red-600 mb-10">
         🛒 Your Cart
       </h1>
-
-      {cartItems.length === 0 ? (
-        <div className="text-center bg-white p-10 rounded-2xl shadow-md max-w-lg mx-auto">
-          <p className="text-gray-600 text-lg mb-4">Your cart is empty!</p>
-          <Link
-            to="/menu"
-            className="inline-block bg-gradient-to-r from-red-500 to-orange-400 text-white px-6 py-3 rounded-xl font-semibold shadow hover:scale-105 transition"
-          >
-            Browse Menu 🍴
-          </Link>
-        </div>
-      ) : (
-        <div className="max-w-2xl mx-auto mt-10 bg-white rounded-xl shadow p-8">
-          <h2 className="text-3xl font-bold mb-4 text-red-600">Your Cart</h2>
-          <ul>
-            {cartItems.map((item) => (
-              <li
-                key={item._id}
-                className="flex justify-between items-center mb-4"
-              >
-                <div>
-                  <span className="font-semibold">{item.title}</span>
-                  <span className="ml-2 text-gray-500">x{item.quantity}</span>
-                </div>
-                <span className="text-red-500 font-bold">
-                  ₹{item.price * item.quantity}
-                </span>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-6 flex flex-col gap-3">
-            <p className="text-xl font-bold">Total: ₹{cartTotal}</p>
-            {error && <p className="text-red-500">{error}</p>}
-            {success && <p className="text-green-600">{success}</p>}
-            <button
-              onClick={() => navigate("/checkout")}
-              className="bg-gradient-to-r from-orange-400 to-red-500 text-white font-semibold py-3 rounded-xl shadow hover:scale-105 transition"
+      <div className="max-w-2xl mx-auto mt-10 bg-white rounded-xl shadow p-8">
+        <h2 className="text-3xl font-bold mb-4 text-red-600">Your Cart</h2>
+        <ul>
+          {cartItems.map((item) => (
+            <li
+              key={item._id}
+              className="flex justify-between items-center mb-4"
             >
-              Proceed to Checkout
-            </button>
-          </div>
+              <div>
+                <span className="font-semibold">{item.title}</span>
+                <span className="ml-2 text-gray-500">x{item.quantity}</span>
+              </div>
+              <span className="text-red-500 font-bold">
+                ₹{item.price * item.quantity}
+              </span>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-6 flex flex-col gap-3">
+          <p className="text-xl font-bold">Total: ₹{cartTotal}</p>
+          {error && <p className="text-red-500">{error}</p>}
+          {success && <p className="text-green-600">{success}</p>}
+          <button
+            onClick={handleCheckout}
+            className="bg-gradient-to-r from-orange-400 to-red-500 text-white font-semibold py-3 rounded-xl shadow hover:scale-105 transition"
+          >
+            Place Order
+          </button>
+          <button
+            onClick={() => navigate("/checkout")}
+            className="bg-gradient-to-r from-orange-400 to-red-500 text-white font-semibold py-3 rounded-xl shadow hover:scale-105 transition mt-2"
+          >
+            Proceed to Checkout
+          </button>
         </div>
-      )}
+      </div>
     </div>
   );
 }

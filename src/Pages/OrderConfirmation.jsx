@@ -18,7 +18,6 @@ export default function OrderConfirmation() {
 
   const fetchOrder = () => {
   fetch(`${import.meta.env.VITE_API_URL}/api/orders/${id}`, {
-    headers: { "Authorization": `Bearer ${token}` },
     credentials: "include",
   })
     .then(res => res.ok ? res.json() : null)
@@ -30,7 +29,6 @@ const updateStatus = async (newStatus) => {
     method: "PATCH",
     headers: { 
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}` 
     },
     credentials: "include",
     body: JSON.stringify({ status: newStatus }),
