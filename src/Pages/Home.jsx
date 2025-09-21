@@ -31,6 +31,7 @@ export default function Home() {
               title={item.title}
               image={item.image}
               price={item.price}
+              discount={item.discount || 20} // Pass discount value if available
             />
           ))}
         </div>

@@ -17,6 +17,7 @@ import Profile from "./Pages/Profile";
 import Orders from "./Pages/Orders";
 import Checkout from "./Pages/Checkout";
 import Orderconfirmation from "./Pages/OrderConfirmation";
+import Points from "./Pages/Points.jsx";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/order-confirmation/:id" element={<Orderconfirmation />} />
+                <Route path="/points" element={<Points />} />
               </Routes>
             </main>
             <Footer />

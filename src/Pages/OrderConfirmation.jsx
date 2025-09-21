@@ -7,35 +7,34 @@ export default function OrderConfirmation() {
 
   useEffect(() => {
     fetchOrder();
-    // Simulate status updates
-    const timer1 = setTimeout(() => updateStatus("Out for delivery"), 10000); // 10s
-    const timer2 = setTimeout(() => updateStatus("Delivered"), 20000); // 20s
+    // Simulate status updates: 1s, 2s, 3s
+    const timer1 = setTimeout(() => updateStatus("Out for delivery"), 10000); // 1 second
+    const timer2 = setTimeout(() => updateStatus("Delivered"), 20000); // 2 seconds
+    const timer3 = setTimeout(() => updateStatus("Completed"), 30000); // 3 seconds (optional)
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
+      clearTimeout(timer3);
     };
   }, [id]);
 
   const fetchOrder = () => {
-  fetch(`${import.meta.env.VITE_API_URL}/api/orders/${id}`, {
-    credentials: "include",
-  })
-    .then(res => res.ok ? res.json() : null)
-    .then(data => setOrder(data));
-};
+    fetch(`${import.meta.env.VITE_API_URL}/api/orders/${id}`, {
+      credentials: "include",
+    })
+      .then(res => res.ok ? res.json() : null)
+      .then(data => setOrder(data));
+  };
 
-const updateStatus = async (newStatus) => {
-  await fetch(`${import.meta.env.VITE_API_URL}/api/orders/${id}/status`, {
-    method: "PATCH",
-    headers: { 
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-    body: JSON.stringify({ status: newStatus }),
-  });
-  fetchOrder();
-};
-
+  const updateStatus = async (newStatus) => {
+    await fetch(`${import.meta.env.VITE_API_URL}/api/orders/${id}/status`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ status: newStatus }),
+    });
+    fetchOrder();
+  };
 
   if (!order) return <div className="text-center mt-10">Loading...</div>;
 
@@ -50,7 +49,8 @@ const updateStatus = async (newStatus) => {
         <span className={`px-3 py-1 rounded-full font-bold ${
           order.status === "Preparing" ? "bg-yellow-400 text-white"
           : order.status === "Out for delivery" ? "bg-blue-400 text-white"
-          : "bg-green-500 text-white"
+          : order.status === "Delivered" ? "bg-green-500 text-white"
+          : "bg-gray-500 text-white"
         }`}>
           Status: {order.status}
         </span>

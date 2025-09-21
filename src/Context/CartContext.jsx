@@ -3,11 +3,12 @@ import { createContext, useContext, useMemo, useState } from "react";
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  const [cartItems, setCartItems] = useState([]);
+  // Always initialize as []
+  const [cart, setCart] = useState([]);
   const [notification, setNotification] = useState("");
 
   function addToCart(item) {
-    setCartItems((prev) => {
+    setCart((prev) => {
       const exists = prev.find((i) => i._id === item._id);
       if (exists) {
         return prev.map((i) =>
@@ -21,34 +22,34 @@ export function CartProvider({ children }) {
   }
 
   const removeFromCart = (id) =>
-    setCartItems((prev) => prev.filter((p) => p._id !== id));
+    setCart((prev) => prev.filter((p) => p._id !== id));
 
   const increase = (id) =>
-    setCartItems((prev) =>
+    setCart((prev) =>
       prev.map((p) => (p._id === id ? { ...p, quantity: p.quantity + 1 } : p))
     );
 
   const decrease = (id) =>
-    setCartItems((prev) =>
+    setCart((prev) =>
       prev.map((p) =>
         p._id === id ? { ...p, quantity: Math.max(1, p.quantity - 1) } : p
       )
     );
 
-  const clearCart = () => setCartItems([]);
+  const clearCart = () => setCart([]);
 
   const cartCount = useMemo(
-    () => cartItems.reduce((a, b) => a + b.quantity, 0),
-    [cartItems]
+    () => cart.reduce((a, b) => a + b.quantity, 0),
+    [cart]
   );
 
   const cartTotal = useMemo(
-    () => cartItems.reduce((a, b) => a + b.quantity * b.price, 0),
-    [cartItems]
+    () => cart.reduce((a, b) => a + b.quantity * b.price, 0),
+    [cart]
   );
 
   const value = {
-    cartItems,
+    cart,
     addToCart,
     removeFromCart,
     increase,

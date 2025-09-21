@@ -102,10 +102,16 @@ export default function Navbar() {
                       My Orders
                     </Link>
                     <div className="px-4 py-2 text-gray-700 border-t flex items-center justify-between">
-                      <span>Points</span>
-                      <span className="bg-yellow-400 text-white rounded-full px-2 py-0.5 text-xs font-bold">
-                        {user.points || 0}
-                      </span>
+                      <Link
+                        to="/points"
+                        className="flex items-center gap-2 cursor-pointer px-2 py-1 rounded hover:bg-amber-100 transition"
+                        onClick={() => setShowDropdown(false)}
+                      >
+                        <span>Points</span>
+                        <span className="bg-yellow-400 text-white rounded-full px-2 py-0.5 text-xs font-bold">
+                          {user.points || 0}
+                        </span>
+                      </Link>
                     </div>
                     <button
                       onClick={handleLogout}
